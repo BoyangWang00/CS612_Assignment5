@@ -99,7 +99,7 @@ footer {
 
     <div class="option-container" id="firstoption">
     <h1> Get the full client list</h1>
-    <button type="button" onclick="get_customers_list()">Submit</button> 
+    <button type="button" onclick="get_customers_list()">Search</button> 
     
     </div>
 
@@ -108,14 +108,14 @@ footer {
 
     <label for="customer_id">customer_id:</label><br>
     <input type="number" id="customer_id_1" name="customer_id"><br>
-    <button type="button" onclick="get_customers_info()">Click Here</button> 
+    <button type="button" onclick="get_customers_info()">Search</button> 
     </div>
 
     <div class="option-container" id="thirdoption">
     <h1> Get the order list for a client by client id</h1>
         <label for="customer_id">customer_id:</label><br>
         <input type="number" id="customer_id_2" name="customer_id"><br>
-        <button type="button" onclick="get_order_list()">Click Here</button>  
+        <button type="button" onclick="get_order_list()">Search</button>  
     </div>
 
     <div class="option-container" id="fourthoption">
@@ -124,23 +124,7 @@ footer {
       <input type="number" id="customer_id_3" name="customer_id"><br>
       <label for="order_id">order_id:</label><br>
       <input type="number" id="order_id" name="order_id"><br>
-      <button type="button" onclick="get_order_info()">Click Here</button> 
-    </div>
-
-     <div class="option-container" id="fourthoption">
-     <h1> Register a new client</h1>
-          <form action="">
-          <label for="name">Pet name:</label><br>
-          <input type="text" id="fname" name="fname" value="name"><br>
-          <label for="age">Age:</label><br>
-          <input type="text" id="fname" name="fname" value="age"><br>
-          <label for="type">type:</label><br>
-          <input type="text" id="lname" name="lname" value="type"><br>
-          <label for="from">From:</label><br>
-          <input type="text" id="lname" name="lname" value="city name"><br>
-          <label for="submit" onclick="post_new_clientClicked()"></label><br>
-          <input type="submit" value="Submit">
-          </form>
+      <button type="button" onclick="get_order_info()">Search</button> 
     </div>
 
   </main>
@@ -172,7 +156,7 @@ function reqListener_1 (e) {
   console.log(this)
   console.log(e)
   const customer_list = JSON.parse(this.responseText);
-  presenting_field.innerHTML = JSON.stringify(customer_list)
+  presenting_field.innerHTML = render_client_map(customer_list)
 }
 
 function get_customers_list(){
@@ -187,7 +171,7 @@ function reqListener_2 (e) {
   console.log(this)
   console.log(e)
   const customer_info = JSON.parse(this.responseText);
-  presenting_field.innerHTML = JSON.stringify(customer_info)
+  presenting_field.innerHTML = render_client_info(customer_info)
 }
 
 function get_customers_info(){
@@ -202,8 +186,8 @@ oReq.send();
 function reqListener_3 (e) {
   console.log(this)
   console.log(e)
-  const customer_list = JSON.parse(this.responseText);
-  presenting_field.innerHTML = JSON.stringify(customer_list)
+  const order_map = JSON.parse(this.responseText);
+  presenting_field.innerHTML = render_order_map(order_map)
 }
 
 function get_order_list(){
@@ -218,8 +202,8 @@ oReq.send();
 function reqListener_4 (e) {
   console.log(this)
   console.log(e)
-  const customer_list = JSON.parse(this.responseText);
-  presenting_field.innerHTML = JSON.stringify(customer_list)
+  const order = JSON.parse(this.responseText);
+  presenting_field.innerHTML = render_order(order)
 }
 
 function get_order_info(){
@@ -232,11 +216,33 @@ oReq.open("GET", url);
 oReq.send();
 }
 
-function post_new_client(){
-var oReq = new XMLHttpRequest();
-oReq.addEventListener("load", reqListener);
-oReq.open("POST", "http://localhost:8000/customers");
-oReq.send();
+function render_client_info(client){
+  return "Client -- Name: " + client["name"] + ". Type: "+client["type"]+". Age: "+client["age"]+". From: "+client["from"] +"."
+}
+
+function render_client(client){
+  return "Client -- Name: " + client[0] + ". Type: "+client[1]+". Age: "+client[2] +"."
+}
+
+function render_client_map(client_map){
+  var ret = "<ol>"
+  for (id in client_map){
+    ret += "<li>" + render_client(client_map[id])+"</li>"
+  }
+  ret += "</ol>"
+  return ret
+}
+
+function render_order(order){
+  return "Order -- Time: " + order[0] +" Service Type: "+order[1]+" Rate: "+order[2] + " out of 5"
+}
+function render_order_map(order_map){
+  var ret = "<ol>"
+  for (id in order_map) {
+    ret += "<li>"+ render_order(order_map[id]) +"</li>"
+  }
+  ret+="</ol>"
+  return ret
 }
 
 </script>

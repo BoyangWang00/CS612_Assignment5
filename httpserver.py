@@ -19,6 +19,9 @@ def get_customers_info(cust_id):
     with open('data.txt', 'r') as data_file:
         data = json.load(data_file)
         customer_info = data.get(cust_id)
+        if customer_info == None:
+            r_value["Customer Doesn't Exist"] = None
+            return json.dumps(r_value)
         customer_info.pop('orders')
         r_value=customer_info
 
@@ -30,9 +33,13 @@ def get_order_list(cust_id):
     r_value = {};
     with open('data.txt', 'r') as data_file:
         data = json.load(data_file)
-        customer_orders = data.get(cust_id).pop('orders')
+        customer_info = data.get(cust_id)
+        
+        if customer_info == None:
+            r_value["Customer Doesn't Exist"] = None
+            return json.dumps(r_value)
+        customer_orders = customer_info.pop('orders')
         r_value=customer_orders
-
         print(r_value)
     return json.dumps(r_value)
 
@@ -41,9 +48,18 @@ def get_order_info(cust_id, order_id):
     r_value = [];
     with open('data.txt', 'r') as data_file:
         data = json.load(data_file)
-        customer_orders = data.get(cust_id).pop('orders')
-        r_value=customer_orders.get(order_id)
+        customer_info = data.get(cust_id)
+        
+        if customer_info == None:
+            r_value.append("Customer Doesn't Exist")
+            return json.dumps(r_value)
 
+        customer_orders = customer_info.pop('orders')
+        the_order=customer_orders.get(order_id)
+        if the_order == None:
+            r_value.append("Customer's Order Doesn't Exist")
+            return json.dumps(r_value)
+        r_value=the_order
         print(r_value)
     return json.dumps(r_value)
 
