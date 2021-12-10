@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>Pet Services Management Page</title>
+
+  <meta charset="UTF-8">
+  <meta name="description" content="blog static website">
+  <meta name="keywords" content="HTML,CSS,XML,JavaScript">
+  <meta name="author" content="Boyang Wang">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+/* Style the header */
+header {
+  background-color: #1D3557;
+  padding: 30px;
+  text-align: right;
+  font-size: 35px;
+  color: white;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+}
+
+.col-container {
+  display: table;
+  width: 100%;
+  background: #A8DADC;
+}
+
+/* Create two columns/boxes that floats next to each other */
+main {
+  float: left;
+  padding: 20px;
+  width: 40%;
+  background-color: #F1FAEE;
+/*  height: 6200px;*/
+}
+
+.option-container {
+  display: table;
+  width: 100%;
+  background: #F1FAEE;
+  padding: 5px;
+}
+
+.time-format {
+    font-size: 13px;
+    font-family: Function,'Trebuchet MS',Arial,sans-serif;
+    text-transform: uppercase;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+nav {
+  float: left;
+  width: 60%;
+/*  height: 6200px; */
+  background: #A8DADC;
+  padding: 20px;
+}
+
+.price {
+  display: inline;
+}
+
+/* Style the footer */
+footer {
+  background-color: #457B9D;
+  padding: 10px;
+  text-align: center;
+  color: white;
+}
+
+</style>
+ </head>
+
+<body>
+
+<header>
+  <h3>Pet Services Ltd.</h3>
+  <p style="font-size:60%;">We are providng the best service for your fury families.</p>
+</header>
+
+
+<div class="col-container">
+
+<section>
+
+  <main id="content">
+
+    <div class="option-container" id="firstoption">
+    <h1> Get the full client list</h1>
+    <button type="button" onclick="get_customers_list()">Submit</button> 
+    
+    </div>
+
+    <div class="option-container" id="secondoption">
+    <h1> Get client information by client id</h1>
+
+    <label for="customer_id">customer_id:</label><br>
+    <input type="number" id="customer_id_1" name="customer_id"><br>
+    <button type="button" onclick="get_customers_info()">Click Here</button> 
+    </div>
+
+    <div class="option-container" id="thirdoption">
+    <h1> Get the order list for a client by client id</h1>
+        <label for="customer_id">customer_id:</label><br>
+        <input type="number" id="customer_id_2" name="customer_id"><br>
+        <button type="button" onclick="get_order_list()">Click Here</button>  
+    </div>
+
+    <div class="option-container" id="fourthoption">
+    <h1> Get a order info for a certain client by order id</h1>
+      <label for="customer_id">customer_id:</label><br>
+      <input type="number" id="customer_id_3" name="customer_id"><br>
+      <label for="order_id">order_id:</label><br>
+      <input type="number" id="order_id" name="order_id"><br>
+      <button type="button" onclick="get_order_info()">Click Here</button> 
+    </div>
+
+     <div class="option-container" id="fourthoption">
+     <h1> Register a new client</h1>
+          <form action="">
+          <label for="name">Pet name:</label><br>
+          <input type="text" id="fname" name="fname" value="name"><br>
+          <label for="age">Age:</label><br>
+          <input type="text" id="fname" name="fname" value="age"><br>
+          <label for="type">type:</label><br>
+          <input type="text" id="lname" name="lname" value="type"><br>
+          <label for="from">From:</label><br>
+          <input type="text" id="lname" name="lname" value="city name"><br>
+          <label for="submit" onclick="post_new_clientClicked()"></label><br>
+          <input type="submit" value="Submit">
+          </form>
+    </div>
+
+  </main>
+
+  <nav id="presenting_field">
+    <p> This is the result presenting field</p>
+  </nav>
+
+</div>
+
+</section>
+
+</body>
+<footer>
+  <p>Copyright © Pet Services Ltd. All rights reserved. Made with ❤️</p>
+</footer>
+
+<script>
+
+
+var content = document.getElementById("content")
+var home_page = content.innerHTML
+var first_post = "<h1>Fresh Creamed Spinach</h1>"
+var second_post =  "<h1>Best Baked Potato </h1>"
+var third_post = "<h1>Perfect Baked Apples </h1>"
+
+
+function reqListener_1 (e) {
+  console.log(this)
+  console.log(e)
+  const customer_list = JSON.parse(this.responseText);
+  presenting_field.innerHTML = JSON.stringify(customer_list)
+}
+
+function get_customers_list(){
+var oReq = new XMLHttpRequest();
+oReq.addEventListener("load", reqListener_1);
+oReq.open("GET", "http://localhost:8000/customers");
+oReq.send();
+
+}
+
+function reqListener_2 (e) {
+  console.log(this)
+  console.log(e)
+  const customer_info = JSON.parse(this.responseText);
+  presenting_field.innerHTML = JSON.stringify(customer_info)
+}
+
+function get_customers_info(){
+var cust_id = document.getElementById("customer_id_1").value
+var url = "http://localhost:8000/customers/"+encodeURIComponent(cust_id)
+var oReq = new XMLHttpRequest();
+oReq.addEventListener("load", reqListener_2);
+oReq.open("GET", url);
+oReq.send();
+}
+
+function reqListener_3 (e) {
+  console.log(this)
+  console.log(e)
+  const customer_list = JSON.parse(this.responseText);
+  presenting_field.innerHTML = JSON.stringify(customer_list)
+}
+
+function get_order_list(){
+var cust_id = document.getElementById("customer_id_2").value
+var url = "http://localhost:8000/customers/"+encodeURIComponent(cust_id)+"/orders"
+var oReq = new XMLHttpRequest();
+oReq.addEventListener("load", reqListener_3);
+oReq.open("GET", url);
+oReq.send();
+}
+
+function reqListener_4 (e) {
+  console.log(this)
+  console.log(e)
+  const customer_list = JSON.parse(this.responseText);
+  presenting_field.innerHTML = JSON.stringify(customer_list)
+}
+
+function get_order_info(){
+var cust_id = document.getElementById("customer_id_3").value
+var order_id = document.getElementById("order_id").value
+var url = "http://localhost:8000/customers/"+encodeURIComponent(cust_id)+"/orders/"+encodeURIComponent(order_id)
+var oReq = new XMLHttpRequest();
+oReq.addEventListener("load", reqListener_4);
+oReq.open("GET", url);
+oReq.send();
+}
+
+function post_new_client(){
+var oReq = new XMLHttpRequest();
+oReq.addEventListener("load", reqListener);
+oReq.open("POST", "http://localhost:8000/customers");
+oReq.send();
+}
+
+</script>
+
+</html>
