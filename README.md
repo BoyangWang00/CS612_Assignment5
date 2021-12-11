@@ -21,7 +21,7 @@ Start the server in docker
 Note: Please make sure you already installed docker on your machine. If not, visit [Get Docker](https://docs.docker.com/get-docker/)
 
 ## Step 4:
-Control+click on the web page link
+Ctrl+click on the web page link
 ```
 To view the page, open this=> file:///home/boyang/.local/share/Trash/files/test/CS612_Assignment5/Assignment5.html
 ```
