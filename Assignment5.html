@@ -217,20 +217,18 @@ oReq.send();
 }
 
 function render_client_info(client){
-  /* if client[0] =="Error"
-    return client */
+  if (client["Error"]){
+    return "Error: "+client["Error"] 
+  }
   return "Client -- Name: " + client["name"] + ". Type: "+client["type"]+". Age: "+client["age"]+". From: "+client["from"] +"."
 }
 
 function render_client(client){
-  if client[0]="Error"
-    return client
+
   return "Client -- Name: " + client[0] + ". Type: "+client[1]+". Age: "+client[2] +"."
 }
 
 function render_client_map(client_map){
-  /* if client_map[0]=="Error"
-    return client_map */
   var ret = "<ol>"
   for (id in client_map){
     ret += "<li>" + render_client(client_map[id])+"</li>"
@@ -240,13 +238,15 @@ function render_client_map(client_map){
 }
 
 function render_order(order){
-  /* if(order[0]=='Error')
-    return order */
+  if(order[0]=='Error'){
+    return "Error: "+order[1]
+  }
   return "Order -- Time: " + order[0] +" Service Type: "+order[1]+" Rate: "+order[2] + " out of 5"
 }
 function render_order_map(order_map){
-  /* if order_map[0] =='Error'
-    return order_map */
+  if (order_map["Error"]) {
+    return "Error: "+order_map["Error"] 
+  }
   var ret = "<ol>"
   for (id in order_map) {
     ret += "<li>"+ render_order(order_map[id]) +"</li>"

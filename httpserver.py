@@ -51,12 +51,14 @@ def get_order_info(cust_id, order_id):
         customer_info = data.get(cust_id)
         
         if customer_info == None:
+            r_value.append("Error")
             r_value.append("Customer Doesn't Exist")
             return json.dumps(r_value)
 
         customer_orders = customer_info.pop('orders')
         the_order=customer_orders.get(order_id)
         if the_order == None:
+            r_value.append("Error")
             r_value.append("Customer's Order Doesn't Exist")
             return json.dumps(r_value)
         r_value=the_order
