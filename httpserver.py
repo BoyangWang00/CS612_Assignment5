@@ -20,7 +20,7 @@ def get_customers_info(cust_id):
         data = json.load(data_file)
         customer_info = data.get(cust_id)
         if customer_info == None:
-            r_value["Customer Doesn't Exist"] = None
+            r_value["Error"] = "Customer Doesn't Exist"
             return json.dumps(r_value)
         customer_info.pop('orders')
         r_value=customer_info
@@ -36,7 +36,7 @@ def get_order_list(cust_id):
         customer_info = data.get(cust_id)
         
         if customer_info == None:
-            r_value["Customer Doesn't Exist"] = None
+            r_value["Error"] = "Customer Doesn't Exist"
             return json.dumps(r_value)
         customer_orders = customer_info.pop('orders')
         r_value=customer_orders
